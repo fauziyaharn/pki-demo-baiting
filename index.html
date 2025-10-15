@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Free Coffee Voucher</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f7f7f7;
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      max-width: 640px;
+      margin: auto;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .warn {
+      color: #a00;
+      margin-top: 12px;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    button {
+      background: #0b66c3;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      background: #084f97;
+    }
+
+    img {
+      width: 200px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Free Coffee Voucher</h2>
+
+    <div class="center">
+      <img src="assets/kopi-kenangan.jpg" alt="Kopi Kenangan" class="voucher-img">
+      <p class="muted">Voucher promo kopi gratis!</p>
+    </div>
+
+    <form id="emailForm" action="/submit" method="POST">
+      <label for="email">Masukkan email untuk mendapatkan notifikasi:</label><br/>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('emailForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      alert(
+        '⚠️ Halaman ini hanya untuk tujuan edukasi dan kesadaran keamanan.\n\n' +
+        'Jangan pernah masukkan data pribadi Anda pada link yang tidak resmi.\n' +
+        'Tenang saja, data Anda tidak akan disimpan dan akan segera dihapus.'
+      );
+      const email = event.target.email.value;
+
+      // kirim email ke server (server.js)
+      const res = await fetch('/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email })
+      });
+
+      if (res.ok) {
+        alert('Terima kasih! Email berhasil dikirim dan disimpan di server.');
+        event.target.reset();
+        document.getElementById('warning').style.display = 'block';
+      } else {
+        alert('Gagal menyimpan email. Coba lagi.');
+      }
+    });
+  </script>
+</body>
+</html>
+
+
